@@ -2,6 +2,7 @@ import {Drawer, Input, Col, Select, Form, Row, Button, Spin} from "antd";
 import React, {useState} from 'react';
 import { addNewStudent } from "./client";
 import {LoadingOutlined} from "@ant-design/icons";
+import {successNotification, errorNotification, infoNotification, warningNotification} from "./Notification";
 
 const {Option} = Select;
 
@@ -14,11 +15,12 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents}) {
 
     const onFinish = student => {
         setSubmitting(true)
-        console.log(alert(JSON.stringify(student, null, 2)));
+        // console.log(alert(JSON.stringify(student, null, 2)));
         addNewStudent(student)
             .then(() => {
                 console.log("student added")
                 onCLose();
+                successNotification("Student added successfully", `${student.name} was added to the system`)
                 fetchStudents();
             }).catch(err => {
                 console.log(err)

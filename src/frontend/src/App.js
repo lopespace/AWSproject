@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 //import {Button, Radio} from 'antd';
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button} from 'antd';
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar} from 'antd';
 import { useState, useEffect} from 'react';
 import React from 'react';
 import {getAllStudent} from "./client";
@@ -18,8 +18,25 @@ import {
 import StudentDrawerForm from "./StudentDrawerForm";
 
 const { Header, Content, Footer, Sider } = Layout;
+const TheAvatar = ({name}) => {
+    let trim = name.trim();
+    if(trim.length === 0) {
+        return <Avatar icon={<UserOutlined/>}/>
+    }
+    const split = trim.split(" ");
+    if(split.length === 1) {
+        return <Avatar>{name.charAt((0))}</Avatar>
+    }
+    return <Avatar>{`${name.charAt(0)}${name.charAt(name.length - 1)}`}</Avatar>
+}
 
 const columns = [
+    {
+        title: '',
+        dataIndex: 'avatar',
+        key: 'avatar',
+        render: (text, student) => <TheAvatar name={student.name}/>
+    },
     {
         title: 'Id',
         dataIndex: 'id',
@@ -105,14 +122,20 @@ function App() {
             dataSource={students}
             columns={columns}
             bordered
-            title = {() => <Button
-                onClick={() => setShowDrawer(!showDrawer)}
-                type="primary"
-                shape="round"
-                icon={<PlusOutlined />}
-                size="small">
-                Add New Student
-            </Button>}
+            title = {() =>
+                <>
+                    <Button
+                    onClick={() => setShowDrawer(!showDrawer)}
+                    type="primary"
+                    shape="round"
+                    icon={<PlusOutlined />}
+                    size="small">
+                    Add New Student
+                </Button>
+                    <Tag style={{marginLeft:"10px"}}>Number of student</Tag>
+                    <Badge count={students.length} className="site-badge-count-4"/>
+                </>
+                    }
             pagination={{ pageSize: 50 }}
             scroll={{ y: 400 }}
             rowKey={(students) => students.id}
