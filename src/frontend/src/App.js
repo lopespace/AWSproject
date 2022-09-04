@@ -1,9 +1,9 @@
 //import logo from './logo.svg';
 //import {Button, Radio} from 'antd';
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar} from 'antd';
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Radio, Popconfirm} from 'antd';
 import { useState, useEffect} from 'react';
 import React from 'react';
-import {getAllStudent} from "./client";
+import {deleteStudent, getAllStudent} from "./client";
 import './App.css';
 //import type { MenuProps } from 'antd';
 import {
@@ -16,6 +16,7 @@ import {
 } from '@ant-design/icons';
 
 import StudentDrawerForm from "./StudentDrawerForm";
+import {errorNotification, successNotification} from "./Notification";
 
 const { Header, Content, Footer, Sider } = Layout;
 const TheAvatar = ({name}) => {
@@ -30,7 +31,22 @@ const TheAvatar = ({name}) => {
     return <Avatar>{`${name.charAt(0)}${name.charAt(name.length - 1)}`}</Avatar>
 }
 
-const columns = [
+const removeStudent = (studentId, callback) => {
+    deleteStudent(studentId).then(() => {
+        successNotification("Student deleted", `Student with ${studentId} was deleted`);
+        callback();
+    }).catch(err => {
+        err.response.json().then(res => {
+            console.log(res);
+            errorNotification(
+                "there was an issue",
+                `${res.message} [${res.status}] [${res.error}]`
+            )
+        });
+    })
+}
+
+const columns = fetchStudents =>[
     {
         title: '',
         dataIndex: 'avatar',
@@ -57,6 +73,23 @@ const columns = [
         dataIndex: 'gender',
         key: 'gender',
     },
+    {
+        title: 'Actions',
+        //dataIndex: '',
+        key: 'actions',
+        render: (text, student) =>
+            <Radio.Group>
+                <Popconfirm
+                    placement='topRight'
+                    title={`Are you sure to delete ${student.name}`}
+                    onConfirm={() => removeStudent(student.id, fetchStudents)}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Radio.Button value="small">Delete</Radio.Button>
+                </Popconfirm>
+                    <Radio.Button value="small">Edit</Radio.Button>
+            </Radio.Group>
+    }
 ];
 
 function getItem(label, key, icon, children) {
@@ -94,8 +127,16 @@ function App() {
             .then(data => {
                 console.log(data);
                 setStudents(data);
-                setFetching(false);
-            })
+                //setFetching(false);
+            }).catch(err => {
+                console.log(err.response)
+            err.response.json().then(res => {
+                console.log(res);
+                errorNotification("There was an issue",
+                    `${res.message} [statusCode:${res.status}] [${res.error}]`
+                )
+            });
+        }).finally(() => setFetching(false))
 
     useEffect(()=> {
         console.log("component is mounted");
@@ -120,7 +161,7 @@ function App() {
             />
         <Table
             dataSource={students}
-            columns={columns}
+            columns={columns(fetchStudents)}
             bordered
             title = {() =>
                 <>
