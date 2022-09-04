@@ -142,16 +142,42 @@ function App() {
         console.log("component is mounted");
         fetchStudents();
     }, []);
-    if(students.length <= 0) {
-        return "no data";
-    }
+    // if(students.length <= 0) {
+    //     return <>
+    //         {/*<Button*/}
+    //         {/*    onClick={() => setShowDrawer(!showDrawer)}*/}
+    //         {/*    type="primary" shape="round" icon={<PlusOutlined/>} size="small">*/}
+    //         {/*    Add new Student*/}
+    //         {/*</Button>*/}
+    //         {/*<StudentDrawerForm*/}
+    //         {/*    showDrawer={showDrawer}*/}
+    //         {/*    setShowDrawer={setShowDrawer}*/}
+    //         {/*    fetchStudents={fetchStudents}*/}
+    //         {/*/>*/}
+    //         <Empty />;
+    //     </>
+    // }
 
     const renderStudents = () => {
         if(fetching) {
             return <Spin indicator = {antIcon} />
         }
         if(students.length <= 0) {
-            return <Empty />;
+            return <>
+                <Button
+                    onClick={() => setShowDrawer(!showDrawer)}
+                    type="primary" shape="round" icon={<PlusOutlined/>} size="small">
+                    Add new Student
+                </Button>
+                <StudentDrawerForm
+                    showDrawer={showDrawer}
+                    setShowDrawer={setShowDrawer}
+                    fetchStudents={fetchStudents}
+                    />
+                <Empty />;
+            </>
+
+
         }
         return <>
             <StudentDrawerForm
