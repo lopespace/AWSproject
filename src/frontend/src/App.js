@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 //import {Button, Radio} from 'antd';
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Radio, Popconfirm} from 'antd';
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Radio, Popconfirm, Image} from 'antd';
 import { useState, useEffect} from 'react';
 import React from 'react';
 import {deleteStudent, getAllStudent} from "./client";
@@ -254,7 +254,9 @@ function App() {
                     textAlign: 'center',
                 }}
             >
-                By HongChao
+                <Image width={75}
+                    src="https://user-images.githubusercontent.com/99449776/189012262-f2085cc0-9adf-4749-9d67-97a1f5657688.jpeg"
+                />
             </Footer>
         </Layout>
     </Layout>
