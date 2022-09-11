@@ -54,7 +54,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.7.3</version>
+<!--				<version>2.7.3</version>-->
 				<configuration>
 					<excludes>
 						<exclude>
@@ -240,9 +240,9 @@
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
+<!--						<groupId>org.apache.maven.plugins</groupId>-->
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>3.3.0</version>
+<!--						<version>3.3.0</version>-->
 						<executions>
 							<execution>
 								<id>copy-build-folder</id>
