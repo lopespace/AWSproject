@@ -11,7 +11,7 @@ env:
   POSTGRESQL_DB: lopespace
   POSTGRESQL_USER: lopespace
   POSTGRESQL_PASSWORD: Zhcapse123%
-  JAVA_VERSION: 17
+  JAVA_VERSION: 18
 
 jobs:
   build:

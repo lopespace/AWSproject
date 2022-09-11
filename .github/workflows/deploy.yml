@@ -13,7 +13,7 @@ env:
   POSTGRESQL_USER: lopespace
   POSTGRESQL_PASSWORD: Zhcapse123%
   # Java
-  JAVA_VERSION: 17
+  JAVA_VERSION: 18
   # DockerHub
   DOCKER_HUB_USERNAME: lopespace
   # AWS & Elastic Bean Stalk
